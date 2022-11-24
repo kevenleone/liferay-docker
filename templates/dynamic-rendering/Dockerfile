@@ -9,12 +9,15 @@ ARG LABEL_VERSION
 ARG TARGETARCH
 ARG TARGETPLATFORM
 
-COPY resources/usr/src/app/* /usr/src/app
+COPY resources/usr/src/app/server.js .
+COPY resources/usr/src/app/package.json .
+COPY resources/usr/src/app/lib/cache.js ./lib
+COPY resources/usr/src/app/lib/healthcheck.js ./lib
 
 ENV MEMORY_CACHE=0
 ENV NODE_VERSION=node16
 
-ENTRYPOINT ["tini", "--", "xvfb-run", "--server-args=-screen 0 1024x768x24", "node", "server.js"]
+ENTRYPOINT ["tini", "--", "xvfb-run", "--server-args=-screen 0 1024x768x24", "npm", "start"]
 
 EXPOSE 3000
 
